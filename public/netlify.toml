@@ -1,0 +1,6 @@
+[[redirects]]
+  from = "/api/*"
+  to = "https://staging-api.erpxbd.com/api/v1"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}

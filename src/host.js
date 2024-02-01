@@ -1,0 +1,1 @@
+export const HOST = "https://staging-api.erpxbd.com/api/v1";

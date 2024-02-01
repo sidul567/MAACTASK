@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+.ps-sidebar-container{
+    background-color: #fff !important;
+}
+.css-1wvake5.ps-collapsed{
+    width: 0 !important;
+    min-width: 0 !important;
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .input{
+        @apply border-0 border-b w-full p-2 pb-3 outline-none font-semibold text-[#898989] placeholder:text-sm text-sm border-[#E1E1E1]
+    }
+    .btn{
+        @apply text-sm bg-[#0052CC] text-white font-medium py-3 px-6 border rounded-lg
+    }
+}
+
+@layer utilities{
+    .sidebar{
+        border-right-width: 0 !important;
+    }
+}

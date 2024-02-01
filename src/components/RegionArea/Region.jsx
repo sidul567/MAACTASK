@@ -11,26 +11,32 @@ import RegionFooter from "./RegionFooter";
 import Loader from "../Loader/Loader";
 
 function Region() {
-  const { data: countryList, isLoading } = useSelector((state) => state.region);
-  const [filtererdCountryList, setFilteredCountryList] = useState([]);
+  const { data, isLoading } = useSelector((state) => state.region);
+  const [dataList, setdataList] = useState([]);
+  const [filtererddataList, setFiltereddataList] = useState([]);
   const [search, setSearch] = useState("");
   const [number, setNumber] = useState(10);
+  const {token} = useSelector((state)=>state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    dispatch(getRegionAction());
-  }, [dispatch]);
+    dispatch(getRegionAction(token, number));
+  }, [dispatch, number]);
+
+  useEffect(()=>{
+    setdataList(data.region);
+  },[data])
 
   useEffect(() => {
     const filteredCountry =
-      countryList &&
-      countryList.filter((country) =>
+      dataList &&
+      dataList.filter((country) =>
         country.name.toLowerCase().includes(search.toLowerCase())
       );
-    setFilteredCountryList(
+    setFiltereddataList(
       filteredCountry ? filteredCountry.slice(0, number) : []
     );
-  }, [search, number, countryList]);
+  }, [search, number, dataList]);
 
   return (
     <>
@@ -53,17 +59,15 @@ function Region() {
                     </span>{" "}
                   </p>
                 </div>
-                {countryList && countryList.length === 0 && (
                   <button
                     className="bg-[#0B2E4E] font-normal text-white text-sm cursor-pointer px-4 py-2 rounded-xl"
                     onClick={() => navigate("/createRegion")}
                   >
                     + Create New
                   </button>
-                )}
               </div>
               <div className="w-[100%] h-[65vh] bg-white mt-8">
-                {countryList && countryList.length === 0 && (
+                {dataList && dataList.length === 0 && (
                   <div className="flex justify-center items-center flex-col gap-8 h-full">
                     <img src={background3} alt="" />
                     <p className="text-sm text-center font-normal w-[220px] text-[#9FA3A6]">
@@ -74,7 +78,7 @@ function Region() {
                     </p>
                   </div>
                 )}
-                {countryList && countryList.length > 0 && (
+                {dataList && dataList.length > 0 && (
                   <>
                     <div className="flex gap-3 justify-end py-5 pr-3">
                       <div className="relative flex items-center">
@@ -121,7 +125,7 @@ function Region() {
                         <p className="w-[78%] font-semibold py-3">Region</p>
                       </div>
                       <div className="h-[80%] overflow-auto">
-                        {filtererdCountryList.map((country, index) => (
+                        {filtererddataList.map((item, index) => (
                           <div className="text-left text-xs text-[#495057] border-b border-b-[#EFF2F7] hover:bg-[#F8F9FA] hover:cursor-pointer duration-200 flex items-center">
                             <div className="w-[10%]">
                               <input
@@ -135,13 +139,13 @@ function Region() {
                               {index + 1}
                             </p>
                             <p className="w-[78%] font-normal py-4">
-                              {country.name}
+                              {item.name}
                             </p>
                           </div>
                         ))}
-                        {filtererdCountryList.length === 0 && (
+                        {filtererddataList.length === 0 && (
                           <p className="text-sm text-[#495057] flex justify-center items-center font-normal h-full">
-                            No Country Found!
+                            No Region Found!
                           </p>
                         )}
                       </div>

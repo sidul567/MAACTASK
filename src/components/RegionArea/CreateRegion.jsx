@@ -1,14 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import RegionHeader from "./RegionHeader";
 import SidePanel from "./SidePanel";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { clearErrors, newRegionAction } from "../../actions/regionAreaAction";
+import { toast } from "react-toastify";
+import Loader from "../Loader/Loader";
 
 function CreateRegion() {
+  const [name, setName] = useState("");
+  const { token } = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {isLoading, error, region} = useSelector((state) => state.newRegion);
+
+  useEffect(()=>{
+    if(region && region.status === "success"){
+      toast.success("Region created successfully!");
+      navigate("/region");
+    }
+    if(error){
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, region])
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    dispatch(newRegionAction(token, name));
+  }
+
   return (
     <>
       <RegionHeader />
       <div className="flex">
         <SidePanel active="region" />
+        {isLoading && <Loader />}
         <div className="flex w-full flex-col">
           <div className="mt-20 px-6 py-6 bg-[#F8F8FB] w-full h-full">
             <div className="flex justify-between items-center">
@@ -26,7 +54,7 @@ function CreateRegion() {
               </div>
             </div>
             <div className="p-8 rounded-lg w-[350px] bg-white mt-8 mx-auto">
-              <form className="flex flex-col">
+              <form className="flex flex-col" onSubmit={handleSubmit}>
                 <div className="flex flex-col">
                   <label
                     htmlFor="region"
@@ -38,14 +66,16 @@ function CreateRegion() {
                     type="text"
                     name=""
                     id="region"
+                    required
                     placeholder="Type region"
                     className="text-sm font-normal text-[#495057] p-2 border border-[#CED4DA] rounded-lg px-3 outline-none"
+                    value={name}
+                    onChange={(e)=>setName(e.target.value)}
                   />
-                  
                 </div>
                 <button className="bg-[#0B2E4E] font-normal text-white text-sm cursor-pointer px-10 py-2 mt-12 ml-auto rounded-xl">
-                    Add Region
-                  </button>
+                  Add Region
+                </button>
               </form>
             </div>
           </div>

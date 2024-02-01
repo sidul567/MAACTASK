@@ -1,14 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import RegionHeader from "./RegionHeader";
 import SidePanel from "./SidePanel";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getRegionAction, newAreaAction } from "../../actions/regionAreaAction";
+import Loader from "../Loader/Loader";
+import { clearErrors } from "../../actions/userAction";
 
 function CreateArea() {
+  const [name, setName] = useState("");
+  const { token } = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {isLoading, error, area} = useSelector((state) => state.newArea);
+  const {data:region} = useSelector((state) => state.region);
+  const [regionId, setRegionId] = useState("");
+
+  useEffect(()=>{
+    dispatch(getRegionAction(token, 300));
+  }, [dispatch])
+  useEffect(()=>{
+    if(area && area.status === "success"){
+      toast.success("Area created successfully!");
+      navigate("/area");
+    }
+    if(error){
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, area])
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    dispatch(newAreaAction(token, name, regionId));
+  }
   return (
     <>
       <RegionHeader />
       <div className="flex">
         <SidePanel active="area" />
+        {isLoading && <Loader />}
         <div className="flex w-full flex-col">
           <div className="mt-20 px-6 py-6 bg-[#F8F8FB] w-full h-full">
             <div className="flex justify-between items-center">
@@ -26,7 +59,7 @@ function CreateArea() {
               </div>
             </div>
             <div className="p-8 rounded-lg w-[350px] bg-white mt-8 mx-auto">
-              <form className="flex flex-col">
+              <form className="flex flex-col" onSubmit={handleSubmit}>
                 <div className="flex flex-col">
                   <label
                     htmlFor="region"
@@ -34,11 +67,13 @@ function CreateArea() {
                   >
                     Region
                   </label>
-                  <select name="region" id="region" className="text-sm font-normal text-[#495057] p-2 border border-[#CED4DA] rounded-lg px-3 outline-none mb-8">
-                    <option value="">Select region</option>
-                    <option value="">Dhaka</option>
-                    <option value="">Khulna</option>
-                    <option value="">Rajshahi</option>
+                  <select name="region" id="region" className="text-sm font-normal text-[#495057] p-2 border border-[#CED4DA] rounded-lg px-3 outline-none mb-8" required defaultValue="" onChange={(e)=>setRegionId(e.target.value)}>
+                    <option value="" disabled>Select region</option>
+                    {
+                      region && region?.region?.map((reg)=>(
+                        <option value={reg._id} key={reg._id}>{reg.name}</option>
+                      ))
+                    }
                   </select>
                 </div>
                 <div className="flex flex-col">
@@ -54,6 +89,8 @@ function CreateArea() {
                     id="area"
                     placeholder="Type Area"
                     className="text-sm font-normal text-[#495057] p-2 border border-[#CED4DA] rounded-lg px-3 outline-none"
+                    value={name}
+                    onChange={(e)=>setName(e.target.value)} required
                   />
                 </div>
                 <button className="bg-[#0B2E4E] font-normal text-white text-sm cursor-pointer px-10 py-2 mt-12 ml-auto rounded-xl">

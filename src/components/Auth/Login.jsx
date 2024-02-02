@@ -40,7 +40,7 @@ function Login() {
           Please login to your account
         </h5>
         <form className="flex flex-col gap-5 w-[20rem] md:w-[25rem] mx-auto" onSubmit={login}>
-            <input type="email" required placeholder="Enter Your Email"  className="input" name="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
+            <input type="text" required placeholder="Enter Your Email"  className="input" name="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
             <input type="password" required value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password" className="input" />
             <input type="submit" required value="Sign in" className="btn mt-4 cursor-pointer" />
         </form>

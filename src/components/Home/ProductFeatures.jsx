@@ -12,14 +12,14 @@ function ProductFeatures() {
       <h2 className="text-center text-[#0B141F] font-extrabold mt-2 text-2xl">
         Make more out of your data
       </h2>
-      <div className="flex justify-between items-center gap-4 mt-10">
+      <div className="flex-col md:flex-row flex justify-between items-center gap-4 mt-10">
         <div className="space-y-6">
           <FeatureCard title="Real-time analytics" end={true} />
           <FeatureCard title="Intuitive dashboard" end={true} />
           <FeatureCard title="Smart suggestions" end={true} />
         </div>
         <div class="relative w-[40%] flex justify-center items-center">
-          <div class="absolute bg-[#0052CC] w-[350px] h-[350px] z-[-1] rounded-full"></div>
+          <div class="absolute bg-[#0052CC] w-[120px] h-[120px] md:w-[350px] md:h-[350px] z-[-1] rounded-full"></div>
           <img src={phone2} className="w-[220px] shadow-tl2 rounded-3xl" alt="" />
         </div>
         <div className="space-y-6">

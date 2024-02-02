@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import user2 from "../../images/user2.png";
 import { IoIosArrowDown } from "react-icons/io";
 import { logoutAction } from "../../actions/userAction";
+import { toast } from "react-toastify";
 
 function Header() {
   const { user, isAuthenticate } = useSelector((state) => state.user);
@@ -12,9 +13,10 @@ function Header() {
   const dispatch = useDispatch();
   const logout = () => {
     dispatch(logoutAction());
+    toast.success("Logout Successful!");
   };
   return (
-    <header className="bg-transparent py-2 px-24 fixed w-full top-0 border border-b-[#C2D2EB] z-50">
+    <header className="bg-transparent py-2 px-2 md:px-24 fixed md:w-full top-0 border border-b-[#C2D2EB] z-50">
       <div className="container mx-auto flex justify-between items-center">
         <Link to={"/"}>
           <img src={logo} alt="" />

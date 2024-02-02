@@ -7,9 +7,9 @@ import treva from "../../images/Treva.png";
 
 function Sponsor() {
   return (
-    <div className='p-24'>
+    <div className='p-12 md:p-24'>
         <h4 className="text-[#0052CC] font-semibold text-xl text-center mb-12">5,000+ high-impact teams rely on Fieldx</h4>
-        <div className='flex justify-between items-center'>
+        <div className='flex flex-col md:flex-row justify-between items-center gap-5 md:gap-0'>
             <img src={aven} alt="" />
             <img src={amara} alt="" />
             <img src={circle} alt="" />

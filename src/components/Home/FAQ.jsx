@@ -33,14 +33,14 @@ function FAQ() {
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   return (
-    <div className="bg-[url('images/background2.png')] bg-blend-overlay bg-[#0052CC] p-24">
+    <div className="bg-[url('images/background2.png')] bg-blend-overlay bg-[#0052CC] p-4 md:p-24">
       <h5 className="text-white text-center font-light text-sm">
         Common Question
       </h5>
       <h2 className="text-white text-center font-extrabold mt-2 text-2xl">
         Frequently asked questions
       </h2>
-      <div className="flex justify-between mt-16 gap-[12rem]">
+      <div className="flex-col md:flex-row flex justify-between mt-16 md:gap-[12rem]">
         <div>
           <FAQAccordian
             id={1}

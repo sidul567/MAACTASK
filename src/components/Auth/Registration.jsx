@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, loginAction, signupAction } from "../../actions/userAction";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Registration() {
@@ -41,8 +41,8 @@ function Registration() {
   };
 
   return (
-    <section className="bg-[url('images/background1.png')] bg-[#F0F6FF] text-center p-24 bg-blend-lighten flex justify-center items-center flex-col">
-      <div className="bg-white py-8 min-w-[600px] rounded-xl">
+    <section className="bg-[url('images/background1.png')] bg-[#F0F6FF] text-center pt-16 md:p-24 bg-blend-lighten flex justify-center items-center flex-col">
+      <div className="bg-white py-8 md:min-w-[600px] rounded-xl">
         <h2 className="text-[#0B141F] font-extrabold mt-2 text-3xl">
           Create Account
         </h2>
@@ -50,7 +50,7 @@ function Registration() {
           Fill in the details below to create an account
         </h5>
         <form
-          className="flex flex-col gap-5 w-[25rem] mx-auto"
+          className="flex flex-col gap-5 md:w-[25rem] mx-auto"
           onSubmit={handleSubmit}
         >
           <input
@@ -143,7 +143,7 @@ function Registration() {
         </form>
         <p className="text-[#0B141F] font-semibold text-base mt-6">
           Already have an account?{" "}
-          <span className="text-[#0052CC]">Sign In</span>
+          <span className="text-[#0052CC]"><Link to="/login">Sign In</Link></span>
         </p>
       </div>
     </section>

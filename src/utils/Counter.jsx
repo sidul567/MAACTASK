@@ -8,7 +8,7 @@ function Count({ icon, number, symbol, title }) {
     <ScrollTrigger onEnter={()=>setCount(true)} onExit={()=>setCount(false)}>
       <div className="flex flex-col justify-center items-center">
       <img src={icon} className="w-12 h-12 p-2" alt="" />
-      <p className="font-sans font-extrabold text-xl text-[#0052CC]">
+      <p className="font-sans font-extrabold md:text-xl text-[#0052CC]">
         {count && <CountUp start={0} end={number} duration={2} delay={0} />}
         {symbol === "+" ? "+" : ` ${symbol}`}
       </p>

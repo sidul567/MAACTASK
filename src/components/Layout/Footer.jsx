@@ -10,7 +10,7 @@ function Footer() {
       <div>
         <img src={logo2} alt="" />
       </div>
-      <p className={`font-light text-white text-xs mt-6 w-[400px] text-center`}>
+      <p className={`font-light text-white text-xs mt-6 w-[300px] md:w-[400px] text-center`}>
         Sed ut perspiciatis unde omnis iste natus error sit voluptatem
         accusantium doloremque laudantium, totam rem aperiam eaque.
       </p>

@@ -5,6 +5,7 @@ import user2 from "../../images/user2.png";
 import { IoIosArrowDown } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../../actions/userAction";
+import { toast } from "react-toastify";
 
 function RegionHeader() {
   const {user} = useSelector((state)=>state.user.user);
@@ -12,6 +13,7 @@ function RegionHeader() {
   const dispatch = useDispatch();
   const logout = ()=>{
     dispatch(logoutAction());
+    toast.success("Logout Successful!");
   }
   return (
     <>

@@ -12,8 +12,8 @@ import Counter from "../../utils/Counter";
 
 function About() {
   return (
-    <div className="bg-[url('images/background1.png')] bg-[#F0F6FF] px-24 py-16 pt-24 flex flex-col">
-      <div className="flex justify-between">
+    <div className="bg-[url('images/background1.png')] bg-[#F0F6FF] px-6 md:px-24 py-16 pt-24 flex flex-col">
+      <div className="flex-col md:flex-row flex justify-between">
         <div className="w-[300px] h-[320px] bg-[#F1F6FF] relative">
           <img
             src={aboutus1}
@@ -27,11 +27,11 @@ function About() {
           />
           <img
             src={aboutus3}
-            className="absolute w-[190px] bottom-0 -right-[50px]"
+            className="absolute w-[190px] bottom-0 -right-[30px] md:-right-[50px]"
             alt=""
           />
         </div>
-        <div className="w-[32%] mx-auto">
+        <div className="mt-16 md:mt-0 md:w-[32%] mx-auto">
           <h5 className="text-[#0052CC] font-semibold text-sm">About Us</h5>
           <h2 className="text-[#0B141F] font-extrabold mt-2 text-2xl">
             A dedicated solution for startups and enterprises
@@ -53,7 +53,7 @@ function About() {
           </div>
         </div>
       </div>
-      <div className="flex justify-between items-center mt-24">
+      <div className="flex justify-between items-center md:mt-24 mt-4">
         <Counter icon={icon2} number="10" symbol="+" title="Platforms Created" />
         <Counter icon={icon3} number="1559"symbol="+"  title="Total Users" />
         <Counter icon={icon4} number="10" symbol="+" title="Total Clients" />

@@ -11,10 +11,10 @@ function Home() {
     <>
     <section className="h-screen">
       <div className="bg-[url('images/background1.png')] bg-[#F0F6FF] text-center p-12 bg-blend-lighten flex justify-center items-center flex-col h-[65vh]">
-        <h1 className="text-6xl text-[#0B141F] font-bold mb-6 w-[55rem]">
+        <h1 className="text-sm md:text-6xl text-[#0B141F] font-bold mb-6 md:w-[55rem]">
           Analytics that transform your product inside-out
         </h1>
-        <div className="flex justify-center gap-4 mt-5">
+        <div className="flex flex-col md:flex-row justify-center gap-4 mt-5">
           <button className=" bg-[#0052CC] text-white font-bold py-3 px-6 rounded-lg">
             Request for Demo
           </button>
@@ -25,9 +25,9 @@ function Home() {
       </div>
       <div className="flex justify-center items-center -mt-[100px]">
         <div className="relative">
-          <img src={tablet1} className="object-contain w-[30vw] shadow-tl rounded-3xl" alt="" />
+          <img src={tablet1} className="object-contain w-[60vw] md:w-[30vw] shadow-tl rounded-3xl" alt="" />
           <div className="absolute -bottom-12 right-12">
-            <img src={phone1} className="object-contain w-[10vw]" alt="" />
+            <img src={phone1} className="object-contain w-[20vw] md:w-[10vw]" alt="" />
           </div>
         </div>
       </div>

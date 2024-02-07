@@ -4,15 +4,17 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import user2 from "../../images/user2.png";
 import { IoIosArrowDown } from "react-icons/io";
-import { logoutAction } from "../../actions/userAction";
 import { toast } from "react-toastify";
+import { useLogout } from "../../redux/features/auth/authSlice";
 
 function Header() {
-  const { user, isAuthenticate } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);  
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const logout = () => {
-    dispatch(logoutAction());
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    dispatch(useLogout());
     toast.success("Logout Successful!");
   };
   return (
@@ -22,11 +24,11 @@ function Header() {
           <img src={logo} alt="" />
         </Link>
         <div className="flex gap-4">
-          {isAuthenticate ? (
+          {Object.keys(user).length > 0 ? (
             <div className="flex gap-3 items-center relative">
               <img src={user2} alt="" />
               <p className="text-[#555B6D] text-sm font-normal">
-                {user.user.name}
+                {user.name}
               </p>
               <IoIosArrowDown
                 onClick={() => setOpen(!open)}
@@ -56,7 +58,7 @@ function Header() {
                 Registration
               </Link>
             </>
-          )}
+          )} 
         </div>
       </div>
     </header>

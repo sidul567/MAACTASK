@@ -3,38 +3,31 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import RegionHeader from "./RegionHeader";
 import SidePanel from "./SidePanel";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getRegionAction, newAreaAction } from "../../actions/regionAreaAction";
 import Loader from "../Loader/Loader";
-import { clearErrors } from "../../actions/userAction";
+import { useCreateAreaMutation, useGetRegionQuery } from "../../redux/features/regionArea/regionAreaApi";
 
 function CreateArea() {
   const [name, setName] = useState("");
-  const { token } = useSelector((state) => state.user.user);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {isLoading, error, area} = useSelector((state) => state.newArea);
-  const {data:region} = useSelector((state) => state.region);
+  const {data:region} = useGetRegionQuery(300);
   const [regionId, setRegionId] = useState("");
+  const [area, {isLoading, isSuccess, error, isError}] = useCreateAreaMutation();
+
 
   useEffect(()=>{
-    dispatch(getRegionAction(token, 300));
-  }, [dispatch])
-  useEffect(()=>{
-    if(area && area.status === "success"){
+    if(isSuccess){
       toast.success("Area created successfully!");
       navigate("/area");
     }
-    if(error){
-      toast.error(error);
-      dispatch(clearErrors());
+    if(isError){
+      toast.error(error.data.message);
     }
-  }, [error, area])
+  }, [isError, error, isSuccess])
 
   const handleSubmit = (e)=>{
     e.preventDefault();
-    dispatch(newAreaAction(token, name, regionId));
+    area({region: regionId, name})
   }
   return (
     <>

@@ -1,37 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, loginAction, signupAction } from "../../actions/userAction";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../Loader/Loader";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const {isAuthenticate, user, error, isLoading} = useSelector((state)=>state.user);
+  const [loginFun, {isLoading, isSuccess, isError, error}] = useLoginMutation();
+  const {user, token} = useSelector((state)=>state.auth);
   const navigate = useNavigate();
-
   useEffect(()=>{
-    if(isAuthenticate){
+    if(Object.keys(user).length > 0){
+      navigate("/region");
+    }
+    if(isSuccess){
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", JSON.stringify(token));
       toast.success("Login Successful!");
       navigate("/region");
     }
-    if(error){
-      toast.error(error);
-      dispatch(clearErrors());
+    if(isError){
+      const {data} = error;
+      toast.error(data.message);
     }
-  }, [isAuthenticate, error])
+  }, [isSuccess, isError, user])
 
   const login = (e)=>{
     e.preventDefault();
-    dispatch(loginAction(email, password));
+    loginFun({email, password});
   }
 
   return (
     <section className="bg-[url('images/background1.png')] bg-[#F0F6FF] text-center pt-16 md:p-24 bg-blend-lighten flex justify-center items-center flex-col">
-      {isLoading && <Loader />}
+     {isLoading && <Loader />} 
       <div className="bg-white p-16 md:min-w-[600px] rounded-xl">
         <h2 className="text-[#0B141F] font-extrabold mt-2 text-3xl">
           Welcome Back!

@@ -4,16 +4,18 @@ import { Link, Outlet } from "react-router-dom";
 import user2 from "../../images/user2.png";
 import { IoIosArrowDown } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutAction } from "../../actions/userAction";
 import { toast } from "react-toastify";
+import { useLogout } from "../../redux/features/auth/authSlice";
 
 function RegionHeader() {
-  const {user} = useSelector((state)=>state.user.user);
+  const { user } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const logout = ()=>{
-    dispatch(logoutAction());
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     toast.success("Logout Successful!");
+    dispatch(useLogout());
   }
   return (
     <>

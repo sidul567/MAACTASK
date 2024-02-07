@@ -3,28 +3,24 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import background3 from "../../images/background3.png";
 import { Link, useNavigate } from "react-router-dom";
 import RegionHeader from "./RegionHeader";
-import { useDispatch, useSelector } from "react-redux";
 import SidePanel from "./SidePanel";
 import { BiSearchAlt } from "react-icons/bi";
-import { getAreaAction } from "../../actions/regionAreaAction";
 import RegionFooter from "./RegionFooter";
 import Loader from "../Loader/Loader";
+import { useGetAreaQuery } from "../../redux/features/regionArea/regionAreaApi";
 
 function Area() {
-  const { data, isLoading } = useSelector((state) => state.area);
   const [dataList, setdataList] = useState([]);
   const [filtererddataList, setFiltereddataList] = useState([]);
   const [search, setSearch] = useState("");
   const [number, setNumber] = useState(10);
-  const { token } = useSelector((state) => state.user.user);
-  const dispatch = useDispatch();
+  const {data, isSuccess, isLoading} = useGetAreaQuery(number);
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(getAreaAction(token, number));
-  }, [dispatch, number]);
 
   useEffect(() => {
-    setdataList(data.area);
+    if(isSuccess){
+      setdataList(data.area);
+    }
   }, [data]);
 
   useEffect(() => {

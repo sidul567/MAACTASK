@@ -2,33 +2,30 @@ import React, { useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import RegionHeader from "./RegionHeader";
 import SidePanel from "./SidePanel";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { clearErrors, newRegionAction } from "../../actions/regionAreaAction";
 import { toast } from "react-toastify";
 import Loader from "../Loader/Loader";
+import { useCreateRegionMutation } from "../../redux/features/regionArea/regionAreaApi";
 
 function CreateRegion() {
   const [name, setName] = useState("");
-  const { token } = useSelector((state) => state.user.user);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {isLoading, error, region} = useSelector((state) => state.newRegion);
+  const [createRegion, {isLoading, isSuccess, isError, error}]= useCreateRegionMutation(name);
 
   useEffect(()=>{
-    if(region && region.status === "success"){
+    if(isSuccess){
       toast.success("Region created successfully!");
       navigate("/region");
     }
-    if(error){
+    if(isError){
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [error, region])
+  }, [error, isSuccess, isError])
 
   const handleSubmit = (e)=>{
     e.preventDefault();
-    dispatch(newRegionAction(token, name));
+    createRegion(name);
   }
 
   return (

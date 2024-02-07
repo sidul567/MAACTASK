@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, loginAction, signupAction } from "../../actions/userAction";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useRegistrationMutation } from "../../redux/features/auth/authApi";
+import Loader from "../Loader/Loader";
 
 function Registration() {
-  const dispatch = useDispatch();
-  const { isAuthenticate, user: cuser, error } = useSelector((state) => state.user);
+  const {user: cuser, token} = useSelector((state)=>state.auth);
+  const [registration, {isSuccess, isError, error, isLoading}] = useRegistrationMutation();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -19,17 +20,21 @@ function Registration() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isAuthenticate) {
-      localStorage.setItem("user", JSON.stringify(user));
-      toast.success("Login Successful!");
+  useEffect(()=>{
+    if(Object.keys(cuser).length > 0){
       navigate("/region");
     }
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
+    if(isSuccess){
+      localStorage.setItem("user", JSON.stringify(cuser));
+      localStorage.setItem("token", JSON.stringify(token));
+      toast.success("Registration Successful!");
+      navigate("/region");
     }
-  }, [isAuthenticate, error]);
+    if(isError){
+      const {data} = error;
+      toast.error(data.message);
+    }
+  }, [isSuccess, isError, cuser])
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -37,11 +42,12 @@ function Registration() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signupAction(user));
+    registration(user);
   };
 
   return (
     <section className="bg-[url('images/background1.png')] bg-[#F0F6FF] text-center pt-16 md:p-24 bg-blend-lighten flex justify-center items-center flex-col">
+      {isLoading && <Loader />} 
       <div className="bg-white py-8 md:min-w-[600px] rounded-xl">
         <h2 className="text-[#0B141F] font-extrabold mt-2 text-3xl">
           Create Account

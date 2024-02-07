@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api",
-      "destination": "https://staging-api.erpxbd.com/api/v1"
+      "source": "/api/:slug",
+      "destination": "https://staging-api.erpxbd.com/api/v1/:slug"
     },
     { "source": "/(.*)", "destination": "/" }
   ]
